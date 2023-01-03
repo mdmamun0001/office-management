@@ -1,0 +1,10 @@
+﻿@{
+    String path = Context.Request.Path;
+    if (!path.ToUpper().Contains("LOGIN") && !path.ToUpper().Contains("FORGOTPASSWORD") && !path.ToUpper().Contains("RESETPASSWORD"))
+    {
+        Layout = "_layout";
+      
+
+    }
+
+}

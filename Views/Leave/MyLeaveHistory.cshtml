@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewData["Title"] = "My Leaves";
+}
+<div class=" row">
+    
+    <div>
+        <form method="get" enctype="multipart/form-data" asp-controller="Leave" asp-action="MyLeaveHistory">
+            <div class="row align-items-center">
+              
+                <div class="col-md-6 mb-3">
+
+                    <label for="">Year</label>
+                    <div class="input-group input-group-sm">
+                        <input class="form-control" name="Year" required placeholder="@DateTime.Now.Year ">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">
+                            <span class="input-group-text" id="topbar-addon">
+                                <svg class="icon icon-xs" x-description="Heroicon name: solid/search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                                </svg>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+        </form>
+    </div>
+</div>
+<div class="card card-body border-0 shadow table-wrapper table-responsive ">
+    <div>
+        <a class="btn btn-pill btn-secondary mt-2 animate-up-2 " style="float:left; margin-top:-25px !important">@(ViewBag.Year != null ? ViewBag.year : "")</a>
+
+        <a class="btn btn-pill btn-secondary mt-2 animate-up-2 " style="float:right; margin-top:-25px !important">@(ViewBag.Authuser != null ? ViewBag.Authuser.Name : "")</a>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th class="border-gray-200">Leave Reason</th>
+                <th class="border-gray-200">Date</th>
+                <th class="border-gray-200">Type</th>
+            </tr>
+        </thead>
+        <tbody>
+           
+           @{
+                if (ViewBag.Authuser != null)
+                {
+                    @foreach (var item in ViewBag.Authuser.Leaves)
+                    {
+                        <!-- Item -->
+                        <tr>
+                            <td>
+                                <span class="fw-normal">@item.Reason</span>
+                            </td>
+                            <td>
+                                <span class="fw-normal">@item.Leavedate.ToString("MMMM dd, yyyy")</span>
+                            </td>
+                            <td><span class="fw-normal">@item.Type</span></td>
+                          
+                        </tr>
+                    }
+               }
+           }
+            
+           
+        </tbody>
+    </table>
+</div>
+
+ 

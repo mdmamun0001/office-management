@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewData["Title"] = "Role Permission";
+}
+<div class="row justify-content-center">
+    <div class="col-12 col-xl-8">
+        
+        <div class="card card-body border-0  shadow table-wrapper table-responsive ">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class="border-gray-200">Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in ViewBag.AllRoles)
+                    {
+                        <!-- Item -->
+                        <tr>
+
+                            <td>
+                                <a asp-controller="Account" asp-action="Profile" asp-route-id="@item.Id" class="fw-bold">
+                                    @item.Name
+                                </a>
+                            </td>
+
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+            <div class="mt-4">
+                <a class="btn btn-pill btn-outline-secondary" asp-controller="Role" asp-action="Create" style="float:right">Add New Role</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+ 

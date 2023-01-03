@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewData["Title"] = "Holiday Yearly";
+}
+<div class=" row">
+    
+    <div>
+        <form method="get" enctype="multipart/form-data" asp-controller="Holiday" asp-action="HolidayByYear">
+            <div class="row align-items-center">
+
+                <div class="col-md-6 mb-3" style="margin-left:4px;">
+
+                    <label for="">Year <small class="text-danger">*</small></label>
+                    <div class="input-group input-group-sm">
+                        <input class="form-control" name="Year" placeholder="@DateTime.Now.Year" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">
+                            <span class="input-group-text" id="topbar-addon">
+                                <svg class="icon icon-xs" x-description="Heroicon name: solid/search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                                </svg>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+        </form>
+    </div>
+</div>
+<div class="card card-body border-0 shadow table-wrapper table-responsive ">
+    <div>
+        <a class="btn btn-pill btn-secondary mt-2 animate-up-2 " style="float:right; margin-top:-25px !important" >@ViewBag.Year</a>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th class="border-gray-200">Holiday Name</th>
+                <th class="border-gray-200">Month</th>
+                <th class="border-gray-200">Day</th>
+                <th class="border-gray-200">Date</th>
+                <th class="border-gray-200">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+           
+            @foreach (var item in ViewBag.Holidays)
+            {
+                <!-- Item -->
+                <tr>
+                    <td>
+                        <span class="fw-normal">@item.ShortDescription</span>
+                    </td>
+                    <td>
+                        <span class="fw-normal">@item.HolidayDate.ToString("MMMM")</span>
+                    </td>
+                    <td><span class="fw-normal">@item.HolidayDate.ToString("dddd")</span></td>
+                    <td><span class="fw-normal">@item.HolidayDate.ToString("MMMM dd, yyyy")</span></td>
+                    <td>
+
+                        <a class="text-warning mr-10" asp-controller="Holiday" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square" style="font-size:18px;"></i></a>
+                        <a class="text-danger" onclick="DeleteItem('/Holiday/Delete/@item.Id')"><i class="fa-solid fa-trash" style="font-size:18px;"></i></a>
+                    </td>
+                </tr>
+            }
+            
+           
+        </tbody>
+    </table>
+    
+    <form class="d-none" method="get" id="form-delete-item-action">
+        <button type="submit" class="btn" id="Delete-confirm-item"> </button>
+    </form>
+</div>
+<div class="row">
+    <div class="col-12 ">
+        <a class="btn btn-pill btn-secondary mt-5" style="float:right" asp-controller="Holiday" asp-action="Create">Add New Holiday</a>
+    </div>
+</div>
+@section Scripts
+    {
+        @{
+            <partial name="_ValidationScriptsPartial"></partial>
+        }
+    
+    <script>
+      
+        function DeleteItem(DeleteUrl) {
+            console.log(DeleteUrl)
+          
+            if (DeleteUrl) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $("#form-delete-item-action").attr("action", DeleteUrl);
+
+                        $('#Delete-confirm-item').click();
+                       
+                    } else {
+                        Swal.fire(
+                            'The item is safe!'
+                        )
+                    }
+                   
+                })
+            }
+        }
+        </script>
+    }
+ 
