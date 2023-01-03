@@ -1,0 +1,105 @@
+﻿@{
+    ViewData["Title"] = "Profile";
+}
+@model ApplicationUser
+<div class="row">
+    <div class="col-12 col-xl-4">
+       
+        <div class="row">
+            <div class="col-12 mb-4">
+                        
+                <div class="card shadow border-0 text-center p-0">
+                    <div class="profile-cover rounded-top"  data-background="/storage/img/user/@Model.CoverImage"></div>
+                    <div class="card-body pb-5">
+                        <img src="~/storage/img/user/@Model.ProfileImage" class="avatar-xl rounded-circle mx-auto mt-n7 mb-4" alt="Profile Image">
+                        <h4 class="h3">@Model.Name</h4>
+                        <h5 class="fw-normal">@Model.JobTitle</h5>
+                        <p class="text-gray mb-2">Zdm Information Technoloy</p>
+                        <p class="text-gray mb-2"> <span style="font-size:18px;"><i class="fa-solid fa-location-dot"></i></span> @Model.Address</p>
+                        
+                       @{
+                            if (ViewBag.Roles != null && ViewBag.Roles.Count > 0)
+                            {
+                                foreach (var item in ViewBag.Roles)
+                                {
+                                                <p class="text-gray mb-2"> Loged In As @item</p>
+                                }
+                            }
+                        }
+                        <a class="text-gray mt-2 btn btn-pill btn-warning animate-up-2" asp-controller="Attendance" asp-action="History" asp-route-id="@Model.Id"> Attendance History</a>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="col-12 col-xl-8">
+        <div class="card card-body border-0 shadow mb-4">
+            <h2 class="h5 mb-4">General information</h2>
+           
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div>
+                           <h2 class="h5 ">Full Name </h2>
+                            <span > @Model.Name </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div>
+                           <h2 class="h5 ">Job Position</h2>
+                            <span> @Model.JobTitle </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div>
+                           <h2 class="h5 ">Email </h2>
+                        <span><i style="font-size:18px;" class="fa-solid fa-envelope"></i> <a href="mailto: @Model.Email">@Model.Email</a> </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div>
+                           <h2 class="h5 ">Phone Number</h2>
+                        <span><i style="font-size:18px;" class="fa-solid fa-square-phone-flip"></i> <a href="tel: @Model.PhoneNumber">@Model.PhoneNumber</a> </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div>
+                           <h2 class="h5 ">ID Card Number </h2>
+                            <span ><i style="font-size:18px;" class="fa-solid fa-id-card"></i> @Model.IdCardNumber </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div>
+                           <h2 class="h5 ">Gender</h2>
+                            <span> @Model.Gender </span>
+                        </div>
+                    </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div>
+                        <h2 class="h5 ">Birth Day </h2>
+                        <span ><i style="font-size:18px;" class="fa-solid fa-calendar-day"></i> @Model.BirthDay </span>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div>
+                        <h2 class="h5 ">Blood Group</h2>
+                        <span><i style="font-size:18px;" class="fa-solid fa-droplet"></i> @Model.BloodGroup </span>
+                    </div>
+                </div>
+            </div>
+              
+           
+        </div>
+        <a class="btn btn-pill btn-outline-secondary animate-up-2 " style="float:left" asp-controller="Account" asp-action="ChangePassword" asp-route-id="@Model.Id">Change Password</a>
+
+        <a class="btn btn-pill btn-outline-secondary animate-up-2 " style="float:right" asp-controller="Account" asp-action="Edit" asp-route-id="@Model.Id">Edit Profile</a>
+
+    </div>
+</div>

@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Zdm_management</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\vendor\sass\node_modules\immutable\dist\immutable.es.js" />
+    <None Include="wwwroot\vendor\sass\node_modules\immutable\dist\immutable.js.flow" />
+    <None Include="wwwroot\vendor\sass\node_modules\immutable\dist\immutable.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\storage\" />
+    <Folder Include="wwwroot\storage\img\user\" />
+    <Folder Include="wwwroot\vendor\chartist\dist\scss\settings\" />
+    <Folder Include="wwwroot\vendor\sass\types\legacy\" />
+    <Folder Include="wwwroot\vendor\sass\types\logger\" />
+    <Folder Include="wwwroot\vendor\sass\types\util\" />
+    <Folder Include="wwwroot\vendor\sass\types\value\" />
+    <Folder Include="wwwroot\vendor\waypoints\src\" />
+    <Folder Include="wwwroot\vendor\waypoints\test\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="3.4.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="MimeKit" Version="3.4.1" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+    <PackageReference Include="Telegram.Bot" Version="17.0.0" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="8.4.3" />
+    <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="6.16.0" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
+</Project>

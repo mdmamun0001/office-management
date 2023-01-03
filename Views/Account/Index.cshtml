@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewData["Title"] = "Users";
+}
+@using X.PagedList.Mvc.Core; <!--import to get HTML Helper-->
+@using X.PagedList;
+
+<div class="card card-body border-0 shadow table-wrapper table-responsive ">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th class="border-gray-200">ID Card Number</th>
+                <th class="border-gray-200">Name</th>
+                <th class="border-gray-200">Email</th>
+                <th class="border-gray-200">Job Position</th>
+                <th class="border-gray-200">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+           
+            @foreach (var item in ViewBag.AllUsers)
+            {
+                <!-- Item -->
+                <tr>
+                    <td>
+                        <a asp-controller="Account" asp-action="Profile" asp-route-id="@item.Id" class="fw-bold">
+                            @item.IdCardNumber
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-controller="Account" asp-action="Profile" asp-route-id="@item.Id" class="fw-bold">
+                            @item.Name
+                        </a>
+                    </td>
+                    <td><span class="fw-normal">@item.Email</span></td>
+                    <td><span class="fw-normal">@item.JobTitle</span></td>
+                    <td>
+
+                        <a class="mr-10 text-warning" asp-controller="Account" asp-action="Edit" asp-route-id="@item.Id"><i class=" fa-solid fa-user-pen" style="font-size:18px;"></i></a>
+                        <a class="text-danger" onclick="DeleteItem('/Account/Delete/@item.Id')"><i class="fa-solid fa-trash" style="font-size:18px;"></i></a>
+                    </td>
+                </tr>
+            }
+            
+           
+        </tbody>
+    </table>
+    <div class="card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
+        <nav aria-label="Page navigation example">
+         
+        <!-- paging control for navigation to the previous page, next page, etc -->
+        @Html.PagedListPager( (IPagedList)ViewBag.AllUsers, page => Url.Action("Index", new { page }) )
+        </nav>
+
+    </div>
+    <form class="d-none" method="get" id="form-delete-item-action">
+        <button type="submit" class="btn" id="Delete-confirm-item"> </button>
+    </form>
+</div>
+<div class="row">
+    <div class="col-12 ">
+        <a class="btn btn-pill btn-secondary mt-5" style="float:right" asp-controller="Account" asp-action="Register">Add New Account</a>
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+        $(document).ready(function(){
+            $('.pagination li').each(function (i) {
+                $(this).addClass("page-item");
+            });
+            $('.pagination li span').each(function (i) {
+                $(this).addClass("page-link");
+            });
+            $('.pagination li a').each(function (i) {
+                $(this).addClass("page-link");
+            });
+        });
+        function DeleteItem(DeleteUrl) {
+            console.log(DeleteUrl)
+          
+            if (DeleteUrl) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $("#form-delete-item-action").attr("action", DeleteUrl);
+
+                        $('#Delete-confirm-item').click();
+                       
+                    } else {
+                        Swal.fire(
+                            'The Account is safe!'
+                        )
+                    }
+                   
+                })
+            }
+        }
+        </script>
+    }
+ 

@@ -1,0 +1,110 @@
+﻿@{
+    @using X.PagedList.Mvc.Core; <!--import to get HTML Helper-->
+    @using X.PagedList;
+    ViewData["Title"] = "Home";
+}
+
+<div class="card card-body border-0 shadow table-wrapper table-responsive bg-yellow-100">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th class="border-gray-200">Id Card</th>
+                <th class="border-gray-200">Name</th>
+                <th class="border-gray-200">Email</th>
+                <th class="border-gray-200 text-center">Checkin</th>
+                <th class="border-gray-200 text-center">Checkout</th>
+                <th class="border-gray-200 text-center">Total <small>(hh:mm)</small></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Item -->
+           @{
+                    foreach (var item in ViewBag.AllUsers)
+                    {
+                                    <tr>
+                                        <td class="">
+                                            <span class="fw-bold">
+                                                @item.IdCardNumber
+                                            </span>
+                                        </td>
+                                        <td class="">
+                                            <span class="fw-normal text-center"> @item.Name</span>
+                                        </td>
+                                        <td class=""><span class="fw-normal text-center">@item.Email</span></td>
+                                        @{
+                                    if (item.Attendances != null && item.Attendances.Count < 1)
+                                    {
+                                            
+                                                    <td class="text-center">
+                                                        <span class="fw-normal text-danger text-center"> --:--</span>
+                                                    </td >
+                                                    <td class="text-center"><span class="fw-normal text-danger text-center">--:--</span></td>
+                                                    <td class="text-center"><span class="fw-normal text-danger  text-center">--:--</span></td>
+                                        }
+                                        }
+                                        @{
+
+                                    foreach (var today in item.Attendances)
+                                    {
+                                                        <td class="text-center"><span class="fw-bold text-success text-center">@(today.CheckInTime != null ? today.CheckInTime.ToString("hh:mm tt") : "--:--")</span> </td>
+                                                        <td class="text-center"><span class="fw-bold text-success text-center">@(today.CheckOutTime != null ? today.CheckOutTime.ToString("hh:mm tt") : "--:--")</span></td>
+
+                                                 
+                                                        if (today.CheckOutTime != null && today.CheckInTime != null)
+                                                        {
+                                                                  <td class="text-center">
+                                                                   @{
+                                                               TimeSpan dif = today.CheckOutTime.Subtract(today.CheckInTime);
+                                                                           <span class="fw-bold text-success text-center">
+                                                                           @dif.Hours : @dif.Minutes 
+                                                                           </span >
+                                                                    }
+                                                                    
+                                                                    </td >
+                                                         } else 
+                                                         {
+                                                                     <td class="text-center">
+                                                                      <span class="fw-normal text-danger text-center">
+                                                                        --:--
+                                                                      </span >
+                                                                    </td >
+                                                         }
+                                                    
+                                            
+                                                    
+                                    }
+                                      
+                                        }
+
+                                    </tr>
+                   }
+               
+           }
+        </tbody>
+    </table>
+    <div class="card-footer mt-5 px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
+        <nav aria-label="Page navigation example">
+
+            <!-- paging control for navigation to the previous page, next page, etc -->
+            @Html.PagedListPager( (IPagedList)ViewBag.AllUsers, page => Url.Action("Index", new { page }) )
+        </nav>
+
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('.pagination li').each(function (i) {
+                $(this).addClass("page-item");
+            });
+            $('.pagination li span').each(function (i) {
+                $(this).addClass("page-link");
+            });
+            $('.pagination li a').each(function (i) {
+                $(this).addClass("page-link");
+            });
+        });
+        
+    </script>
+}
